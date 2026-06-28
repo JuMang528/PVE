@@ -460,6 +460,7 @@ class Enemy extends GameObject {
             this.game.sounds.playExplosion();
             this.game.particles.createExplosion(this.x, this.y, this.color, 30);
             this.game.player.addScore(this.scoreValue);
+            this.game.spawnPowerUp(this.x, this.y, this.type);
         }
     }
 
@@ -772,6 +773,21 @@ class Game {
         }
         
         this.enemies.push(new Enemy(this, type));
+    }
+
+    spawnPowerUp(x, y, enemyType) {
+        const dropRates = {
+            small: 0.15,
+            medium: 0.3,
+            large: 0.5,
+            boss: 1.0
+        };
+        
+        const rate = dropRates[enemyType] || 0.15;
+        
+        if (Math.random() < rate) {
+            this.powerUps.push(new PowerUp(this, x, y));
+        }
     }
 
     checkCollisions() {
