@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>飞机大战</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- HUD -->
+        <div class="hud">
+            <div class="hud-left">
+                <div class="score">得分: <span id="score">0</span></div>
+                <div class="level">关卡: <span id="level">1</span></div>
+            </div>
+            <div class="hud-right">
+                <div class="lives">生命:</div>
+                <div class="life-bar" id="lifeBar">
+                    <div class="life"></div>
+                    <div class="life"></div>
+                    <div class="life"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="pause-btn" id="pauseBtn">暂停</button>
+
+        <!-- 开始界面 -->
+        <div class="ui-overlay" id="startScreen">
+            <h1>飞机大战</h1>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="game.start()">开始游戏</button>
+                <button class="btn btn-secondary" onclick="game.loadGame()">读取存档</button>
+                <button class="btn btn-secondary" onclick="game.showSettings()">游戏设置</button>
+            </div>
+            <div style="margin-top: 30px; font-size: 0.9rem; color: #aaa;">
+                <p>操作说明:</p>
+                <p>↑↓←→ 或 WASD 控制移动</p>
+                <p>空格键 发射子弹</p>
+                <p>P 键 暂停游戏</p>
+            </div>
+        </div>
+
+        <!-- 设置界面 -->
+        <div class="ui-overlay hidden" id="settingsScreen">
+            <div class="settings-panel">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #00ffff;">游戏设置</h2>
+                <div class="setting-item">
+                    <span class="setting-label">音效音量</span>
+                    <input type="range" id="soundVolume" min="0" max="100" value="80">
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">背景音乐</span>
+                    <input type="checkbox" id="bgmEnabled" checked>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">粒子效果</span>
+                    <input type="checkbox" id="particlesEnabled" checked>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">画质</span>
+                    <select id="graphicsQuality">
+                        <option value="high">高</option>
+                        <option value="medium">中</option>
+                        <option value="low">低</option>
+                    </select>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="game.saveSettings()">保存设置</button>
+                    <button class="btn btn-secondary" onclick="game.hideSettings()">返回</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 暂停界面 -->
+        <div class="ui-overlay hidden" id="pauseScreen">
+            <h1>游戏暂停</h1>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="game.resume()">继续游戏</button>
+                <button class="btn btn-secondary" onclick="game.saveGame()">保存游戏</button>
+                <button class="btn btn-secondary" onclick="game.showSettings()">游戏设置</button>
+                <button class="btn btn-danger" onclick="game.restart()">重新开始</button>
+            </div>
+        </div>
+
+        <!-- 游戏结束界面 -->
+        <div class="ui-overlay hidden" id="gameOverScreen">
+            <div class="game-over-panel">
+                <h1>游戏结束</h1>
+                <div class="final-score">最终得分: <span id="finalScore">0</span></div>
+                <div class="high-score" id="highScore">最高分: 0</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="game.restart()">再来一局</button>
+                    <button class="btn btn-secondary" onclick="game.showStartScreen()">返回主菜单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
